@@ -1,8 +1,13 @@
-// src/InvestorsPage.js
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 
 const InvestorsPage = () => {
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupType, setPopupType] = useState(null); // 'partially' or 'complete'
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [walletAddress, setWalletAddress] = useState('');
+  const [amount, setAmount] = useState('');
+
   useEffect(() => {
     gsap.fromTo(".card", 
       { rotationY: 0, scale: 0.9, opacity: 0.5 }, 
@@ -34,6 +39,35 @@ const InvestorsPage = () => {
     },
   ];
 
+  const handlePartiallyFundClick = (card) => {
+    setSelectedCard(card);
+    setPopupType('partially');
+    setShowPopup(true);
+  };
+
+  const handleCompleteFundClick = (card) => {
+    setSelectedCard(card);
+    setPopupType('complete');
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    setSelectedCard(null);
+    setWalletAddress('');
+    setAmount('');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission here (e.g., send data to backend)
+    console.log('Wallet Address:', walletAddress);
+    if (popupType === 'partially') {
+      console.log('Amount:', amount);
+    }
+    handleClosePopup();
+  };
+
   return (
     <div className="investors-page flex flex-wrap gap-6 justify-center min-h-screen p-10">
       {cards.map((card, index) => (
@@ -49,10 +83,16 @@ const InvestorsPage = () => {
               <p className="mb-2"><strong>Steam ID:</strong> {card.steamId}</p>
               <p className="mb-4"><strong>Min Funding Req:</strong> {card.minFundingReq}</p>
               <div className="flex gap-4">
-                <button className="bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300">
+                <button 
+                  className="bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
+                  onClick={() => handlePartiallyFundClick(card)}
+                >
                   Partially Fund
                 </button>
-                <button className="bg-blue-300 hover:bg-blue-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300">
+                <button 
+                  className="bg-blue-300 hover:bg-blue-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
+                  onClick={() => handleCompleteFundClick(card)}
+                >
                   Complete Fund
                 </button>
               </div>
@@ -60,6 +100,58 @@ const InvestorsPage = () => {
           </div>
         </div>
       ))}
+
+      {/* Popup Form */}
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+            <h2 className="text-xl font-semibold mb-4">
+              {popupType === 'partially' ? `Partially Fund ${selectedCard?.gameName}` : `Complete Fund ${selectedCard?.gameName}`}
+            </h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label htmlFor="walletAddress" className="block text-gray-700 mb-2">Wallet Address</label>
+                <input 
+                  type="text" 
+                  id="walletAddress" 
+                  value={walletAddress}
+                  onChange={(e) => setWalletAddress(e.target.value)}
+                  className="border border-gray-300 rounded-lg w-full p-2"
+                  required 
+                />
+              </div>
+              {popupType === 'partially' && (
+                <div className="mb-4">
+                  <label htmlFor="amount" className="block text-gray-700 mb-2">Amount</label>
+                  <input 
+                    type="number" 
+                    id="amount" 
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="border border-gray-300 rounded-lg w-full p-2"
+                    required 
+                  />
+                </div>
+              )}
+              <div className="flex justify-end gap-4">
+                <button 
+                  type="button" 
+                  className="bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md"
+                  onClick={handleClosePopup}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
