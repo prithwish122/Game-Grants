@@ -4,17 +4,23 @@ const app = express();
 const __path = path.resolve();
 const fs = require("fs");
 const { runDeployTransfer } = require("./runDeploy");
-const cors = require("cors")
+const cors = require("cors");
 
-app.use(cors({
-  origin: 'http://localhost:3000' // Allow requests only from this origin
-}));
+app.use(
+  cors({
+    origin: true, // Allow requests only from this origin
+  })
+);
 console.log(__path);
 
 app.use(express.json());
 
 app.get("/", (req, res) => {
   res.sendFile(`${__path}/public/index.html`);
+});
+
+app.post("/test", (req, res) => {
+  res.send({ text: "Babe you in GAMEGRANT, and the service is working" });
 });
 
 app.get("/create", (req, res) => {
@@ -43,7 +49,7 @@ app.post("/withdraw", async (req, res) => {
   const template = `export const walletAddress = "${clientAddress}";
   export const claimableAmt = ${claimAmt};`;
   fs.writeFileSync("./receiver.ts", template);
-  if(claimAmt > 0) {
+  if (claimAmt > 0) {
     await runDeployTransfer();
   }
   console.log("023948,============");
