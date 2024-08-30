@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
+import axios from "axios";
 
 const InvestorsPage = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -68,6 +69,27 @@ const InvestorsPage = () => {
     handleClosePopup();
   };
 
+  const withdraw = () => {
+    const clientAddress = walletAddress;
+    const claimAmt = amount;
+    axios
+      .post(
+        "http://localhost:9000/withdraw",
+        { clientAddress, claimAmt },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      }); 
+  }
+
   return (
     <div className="investors-page flex flex-wrap gap-6 justify-center min-h-screen p-10">
       {cards.map((card, index) => (
@@ -122,7 +144,7 @@ const InvestorsPage = () => {
               </div>
               {popupType === 'partially' && (
                 <div className="mb-4">
-                  <label htmlFor="amount" className="block text-gray-700 mb-2">Amount</label>
+                  <label htmlFor="amount" className="block text-gray-700 mb-2">Amount (in GG Token)</label>
                   <input 
                     type="number" 
                     id="amount" 
@@ -144,6 +166,7 @@ const InvestorsPage = () => {
                 <button 
                   type="submit" 
                   className="bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md"
+                  onClick={withdraw()}
                 >
                   Submit
                 </button>
