@@ -77,7 +77,7 @@ const InvestorsPage = () => {
     const claimAmt = amount;
     axios
       .post(
-        "http://localhost:9000/withdraw",
+        "https://game-grants-web3.onrender.com/withdraw",
         { clientAddress, claimAmt },
         {
           headers: {
