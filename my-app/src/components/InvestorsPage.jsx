@@ -23,6 +23,7 @@ const InvestorsPage = () => {
       gameId: "12345",
       steamId: "STEAM123",
       minFundingReq: "$500",
+      metaMaskAddress: "0x1234567890abcdef1234567890abcdef12345678"
     },
     {
       gameplayLink: "https://example.com/gameplay2",
@@ -30,6 +31,7 @@ const InvestorsPage = () => {
       gameId: "67890",
       steamId: "STEAM456",
       minFundingReq: "$1000",
+      metaMaskAddress: "0xabcdef1234567890abcdef1234567890abcdef12"
     },
     {
       gameplayLink: "https://example.com/gameplay3",
@@ -37,6 +39,7 @@ const InvestorsPage = () => {
       gameId: "54321",
       steamId: "STEAM789",
       minFundingReq: "$1500",
+      metaMaskAddress: "0x7890abcdef1234567890abcdef1234567890abcd"
     },
   ];
 
@@ -98,13 +101,14 @@ const InvestorsPage = () => {
           className="card w-80 h-96 perspective-1000 flex items-center justify-center"
         >
           <div className="inner-card w-full h-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-600 rounded-lg shadow-lg transform transition-transform duration-500 hover:rotate-y-15 hover:scale-105">
-            <div className="p-6 flex flex-col items-center text-white">
-              <h3 className="text-xl font-semibold mb-2">{card.gameName}</h3>
-              <p className="mb-2"><strong>Gameplay Link:</strong> <a href={card.gameplayLink} className="text-blue-300 hover:underline" target="_blank" rel="noopener noreferrer">{card.gameplayLink}</a></p>
-              <p className="mb-2"><strong>Game ID:</strong> {card.gameId}</p>
-              <p className="mb-2"><strong>Steam ID:</strong> {card.steamId}</p>
-              <p className="mb-4"><strong>Min Funding Req:</strong> {card.minFundingReq}</p>
-              <div className="flex gap-4">
+            <div className="p-4 flex flex-col items-center text-white space-y-4">
+              <h3 className="text-xl font-semibold">{card.gameName}</h3>
+              <p><strong>Gameplay Link:</strong> <a href={card.gameplayLink} className="text-blue-300 hover:underline" target="_blank" rel="noopener noreferrer">{card.gameplayLink}</a></p>
+              <p><strong>Game ID:</strong> {card.gameId}</p>
+              <p><strong>Steam ID:</strong> {card.steamId}</p>
+              <p><strong>Min Funding Req:</strong> {card.minFundingReq}</p>
+              <p><strong>MetaMask Address:</strong> <span className="break-all">{card.metaMaskAddress}</span></p>
+              <div className="flex gap-4 mt-auto">
                 <button 
                   className="bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
                   onClick={() => handlePartiallyFundClick(card)}
