@@ -1,14 +1,14 @@
 ﻿# Game-Grants
 
- ##Vision :
+ ## Vision :
  To empower game enthusiasts by providing a Web3 platform where they can receive donations to pursue their gaming passions and expand their reach. 🎮🌟
 
- ##Description: 
+ ## Description: 
  Game Grant is a Web3 platform that empowers game enthusiasts by allowing creators and artists to sell their game accounts while receiving donations. It’s a space where passion meets support, fostering gaming growth and reach. 🎮🌟
 
 Referred By HACKQUEST
 
-##TECH STACK :
+## TECH STACK :
 
 **React**
 **Hardhat**
