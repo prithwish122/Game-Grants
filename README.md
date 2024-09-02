@@ -4,7 +4,7 @@
  To empower game enthusiasts by providing a Web3 platform where they can receive donations to pursue their gaming passions and expand their reach. 🎮🌟
 
  ## Description: 
- Game Grant is a Web3 platform that empowers game enthusiasts by allowing creators and artists to sell their game accounts while receiving donations. It’s a space where passion meets support, fostering gaming growth and reach. 🎮🌟
+ A Web3 platform empowering game enthusiasts to receive donations, fueling their passion and expanding their reach. It connects gamers with supporters, creating a community where dreams are realized through decentralized support, unlocking new opportunities in gaming. 🎮🌟
 
 Referred By HACKQUEST
 
