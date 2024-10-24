@@ -72,7 +72,6 @@ const InvestorsPage = () => {
     if (popupType === 'partially') {
       console.log('Amount:', amount);
     }
-    withdraw();
     handleClosePopup();
   };
 
