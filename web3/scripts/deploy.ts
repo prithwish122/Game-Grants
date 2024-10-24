@@ -10,7 +10,7 @@ async function main() {
 
   // Replace with the address to which you want to mint tokens and the amount
   const recipientAddress = "0xB702203B9FD0ee85aeDB9d314C075D480d716635";
-  const mintAmount = hre.ethers.utils.parseUnits("100", 18); // Mint 90 tokens
+  const mintAmount = hre.ethers.utils.parseUnits("500", 18); // Mint 90 tokens
 
   // Mint new tokens
   const tx = await myCustomToken.mint(recipientAddress, mintAmount);

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import axios from "axios";
+import gameGrant from '../contractInfo/ggToken.json'
+import {BrowserProvider, ethers} from 'ethers'
 
+const contractAddress = '0x4555A8A618713C278E437a96193C06417394a0D1'
 const InvestorsPage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupType, setPopupType] = useState(null); // 'partially' or 'complete'
@@ -10,8 +13,8 @@ const InvestorsPage = () => {
   const [amount, setAmount] = useState('');
 
   useEffect(() => {
-    gsap.fromTo(".card", 
-      { rotationY: 0, scale: 0.9, opacity: 0.5 }, 
+    gsap.fromTo(".card",
+      { rotationY: 0, scale: 0.9, opacity: 0.5 },
       { rotationY: 360, scale: 1, opacity: 1, duration: 1.5, stagger: 0.2, ease: "power2.out" }
     );
   }, []);
@@ -69,118 +72,130 @@ const InvestorsPage = () => {
     if (popupType === 'partially') {
       console.log('Amount:', amount);
     }
+    withdraw();
     handleClosePopup();
   };
 
-  const withdraw = () => {
-    const clientAddress = walletAddress;
-    const claimAmt = amount;
-    axios
-      .post(
-        "https://game-grants-web3.onrender.com/withdraw",
-        { clientAddress, claimAmt },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error!", error);
-      }); 
-  }
+  const withdraw = async () => {
 
-  return (
-    <div className="investors-page flex flex-wrap gap-6 justify-center min-h-screen p-10">
-      {cards.map((card, index) => (
-        <div 
-          key={index} 
-          className="card w-80 h-96 perspective-1000 flex items-center justify-center"
-        >
-          <div className="inner-card w-full h-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-600 rounded-lg shadow-lg transform transition-transform duration-500 hover:rotate-y-15 hover:scale-105">
-            <div className="p-4 flex flex-col items-center text-white space-y-4">
-              <h3 className="text-xl font-semibold">{card.gameName}</h3>
-              <p><strong>Gameplay Link:</strong> <a href={card.gameplayLink} className="text-blue-300 hover:underline" target="_blank" rel="noopener noreferrer">{card.gameplayLink}</a></p>
-              <p><strong>Game ID:</strong> {card.gameId}</p>
-              <p><strong>Steam ID:</strong> {card.steamId}</p>
-              <p><strong>Min Funding Req:</strong> {card.minFundingReq}</p>
-              <p><strong>MetaMask Address:</strong> <span className="break-all">{card.metaMaskAddress}</span></p>
-              <div className="flex gap-4 mt-auto">
-                <button 
-                  className="bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
-                  onClick={() => handlePartiallyFundClick(card)}
-                >
-                  Partially Fund
-                </button>
-                <button 
-                  className="bg-blue-300 hover:bg-blue-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
-                  onClick={() => handleCompleteFundClick(card)}
-                >
-                  Complete Fund
-                </button>
-              </div>
+    const provider = new BrowserProvider(window.ethereum);
+
+    const signer = await provider.getSigner()
+    const movieRev = new ethers.Contract(contractAddress, gameGrant.abi, signer)
+    // mint();
+    console.log(amount, "========inside withdraw===")
+
+    await (await movieRev.mint(walletAddress, ethers.parseUnits(amount.toString(), 18))).wait();
+
+    alert('Transaction Complete!!');
+  };
+
+  // axios
+  //   .post(
+  //     "http://localhost:9000/withdraw",
+  //     { clientAddress, claimAmt },
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   )
+  //   .then((response) => {
+  //     console.log(response.data);
+  //   })
+  //   .catch((error) => {
+  //     console.error("There was an error!", error);
+  //   }); 
+
+
+return (
+  <div className="investors-page flex flex-wrap gap-6 justify-center min-h-screen p-10">
+    {cards.map((card, index) => (
+      <div
+        key={index}
+        className="card w-80 h-96 perspective-1000 flex items-center justify-center"
+      >
+        <div className="inner-card w-full h-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-600 rounded-lg shadow-lg transform transition-transform duration-500 hover:rotate-y-15 hover:scale-105">
+          <div className="p-4 flex flex-col items-center text-white space-y-4">
+            <h3 className="text-xl font-semibold">{card.gameName}</h3>
+            <p><strong>Gameplay Link:</strong> <a href={card.gameplayLink} className="text-blue-300 hover:underline" target="_blank" rel="noopener noreferrer">{card.gameplayLink}</a></p>
+            <p><strong>Game ID:</strong> {card.gameId}</p>
+            <p><strong>Steam ID:</strong> {card.steamId}</p>
+            <p><strong>Min Funding Req:</strong> {card.minFundingReq}</p>
+            <p><strong>MetaMask Address:</strong> <span className="break-all">{card.metaMaskAddress}</span></p>
+            <div className="flex gap-4 mt-auto">
+              <button
+                className="bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
+                onClick={() => handlePartiallyFundClick(card)}
+              >
+                Partially Fund
+              </button>
+              <button
+                className="bg-blue-300 hover:bg-blue-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
+                onClick={() => handleCompleteFundClick(card)}
+              >
+                Complete Fund
+              </button>
             </div>
           </div>
         </div>
-      ))}
+      </div>
+    ))}
 
-      {/* Popup Form */}
-      {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
-            <h2 className="text-xl font-semibold mb-4">
-              {popupType === 'partially' ? `Partially Fund ${selectedCard?.gameName}` : `Complete Fund ${selectedCard?.gameName}`}
-            </h2>
-            <form onSubmit={handleSubmit}>
+    {/* Popup Form */}
+    {showPopup && (
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+        <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+          <h2 className="text-xl font-semibold mb-4">
+            {popupType === 'partially' ? `Partially Fund ${selectedCard?.gameName}` : `Complete Fund ${selectedCard?.gameName}`}
+          </h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label htmlFor="walletAddress" className="block text-gray-700 mb-2">Wallet Address</label>
+              <input
+                type="text"
+                id="walletAddress"
+                value={walletAddress}
+                onChange={(e) => setWalletAddress(e.target.value)}
+                className="border border-gray-300 rounded-lg w-full p-2"
+                required
+              />
+            </div>
+            {popupType === 'partially' && (
               <div className="mb-4">
-                <label htmlFor="walletAddress" className="block text-gray-700 mb-2">Wallet Address</label>
-                <input 
-                  type="text" 
-                  id="walletAddress" 
-                  value={walletAddress}
-                  onChange={(e) => setWalletAddress(e.target.value)}
+                <label htmlFor="amount" className="block text-gray-700 mb-2">Amount (in GG Token)</label>
+                <input
+                  type="number"
+                  id="amount"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
                   className="border border-gray-300 rounded-lg w-full p-2"
-                  required 
+                  required
                 />
               </div>
-              {popupType === 'partially' && (
-                <div className="mb-4">
-                  <label htmlFor="amount" className="block text-gray-700 mb-2">Amount (in GG Token)</label>
-                  <input 
-                    type="number" 
-                    id="amount" 
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    className="border border-gray-300 rounded-lg w-full p-2"
-                    required 
-                  />
-                </div>
-              )}
-              <div className="flex justify-end gap-4">
-                <button 
-                  type="button" 
-                  className="bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md"
-                  onClick={handleClosePopup}
-                >
-                  Cancel
-                </button>
-                <button 
-                  type="submit" 
-                  className="bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md"
-                  onClick={withdraw()}
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
+            )}
+            <div className="flex justify-end gap-4">
+              <button
+                type="button"
+                className="bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md"
+                onClick={handleClosePopup}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-md"
+                onClick={withdraw}
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 };
 
 export default InvestorsPage;

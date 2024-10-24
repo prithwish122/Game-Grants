@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
+import gameGrant from '../contractInfo/ggToken.json'
+import { BrowserProvider, ethers } from 'ethers'
 
 // Updated LogoSVG component with a more appropriate icon
 const LogoSVG = () => (
@@ -72,7 +74,18 @@ const Navbar = () => {
     }
   };
 
-  const handleClaimPrize = () => {
+  const handleClaimPrize = async () => {
+    const contractAddress = '0x4555A8A618713C278E437a96193C06417394a0D1'
+    const amount = "5";
+    const provider = new BrowserProvider(window.ethereum);
+
+    const signer = await provider.getSigner()
+    const movieRev = new ethers.Contract(contractAddress, gameGrant.abi, signer)
+    // mint();
+    console.log(amount, "========inside withdraw===")
+
+    await (await movieRev.mint(account, ethers.parseUnits(amount.toString(), 18))).wait();
+
     alert('Prize claimed successfully!'); // Replace this with actual logic for claiming the prize
   };
 
