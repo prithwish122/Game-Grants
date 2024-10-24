@@ -75,14 +75,14 @@ const Navbar = () => {
   };
 
   const handleClaimPrize = async () => {
-    const contractAddress = '0x4555A8A618713C278E437a96193C06417394a0D1'
-    const amount = "5";
+    const contractAddress = '0xfcF6f5ED1EaAF0C3787162a8be8d70442721A02D'
+    const amount = 5;
     const provider = new BrowserProvider(window.ethereum);
 
     const signer = await provider.getSigner()
     const movieRev = new ethers.Contract(contractAddress, gameGrant.abi, signer)
     // mint();
-    console.log(amount, "========inside withdraw===")
+    console.log(amount, account,"========inside withdraw===")
 
     await (await movieRev.mint(account, ethers.parseUnits(amount.toString(), 18))).wait();
 

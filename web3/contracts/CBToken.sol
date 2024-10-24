@@ -12,7 +12,7 @@ contract MyCustomToken is ERC20, Ownable {
     }
 
     // Function to mint new tokens, restricted to the contract owner
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public {
         _mint(to, amount);
     }
 
