@@ -17,10 +17,10 @@ Referred By HACKQUEST
 
 ## Getting Started
 
-### Add Contract Address
+### Add Contract Address GG token to wallet
 - Contract Address 0xfcF6f5ED1EaAF0C3787162a8be8d70442721A02D
 
-- Verify this Contract -> [Verify HACKSP](https://testnet.aiascan.com/token/0xfcF6f5ED1EaAF0C3787162a8be8d70442721A02D)
+- Verify this Contract -> [Verify GG](https://testnet.aiascan.com/token/0xfcF6f5ED1EaAF0C3787162a8be8d70442721A02D)
 
 ### Prerequisites
 
