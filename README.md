@@ -7,13 +7,14 @@
  A Web3 platform empowering game enthusiasts to receive donations, fueling their passion and expanding their reach. It connects gamers with supporters, creating a community where dreams are realized through decentralized support, unlocking new opportunities in gaming. 🎮🌟
 
 <!-- Referred By HACKQUEST -->
-
+----------
 ## TECH STACK :
 
 **React**
 **Hardhat**
 **NodeJs**
 
+---------
 
 ## Getting Started
 
@@ -21,6 +22,9 @@
 - Contract Address 0x69E956FB197BC0bd86de82B00f88f68633b08d57
 
 - Verify this Contract -> [Verify GG](https://explorer.sepolia.mantle.xyz/token/0x69E956FB197BC0bd86de82B00f88f68633b08d57)
+
+
+----
 
 ### Prerequisites
 
