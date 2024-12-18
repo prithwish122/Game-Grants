@@ -11,6 +11,7 @@
     "deploy:opencampus": "npx hardhat run --network opencampus scripts/deploy.ts",
     "deploy:transfer": "npx hardhat run --network aia scripts/existing_contract_use.ts",
     "deploy:neo": "npx hardhat run --network neoTestnet scripts/deploy.ts",
+    "deploy:mantle": "npx hardhat run --network mantle scripts/deploy.ts",
     "deploy:aia": "npx hardhat run --network aia scripts/deploy.ts"
   },
   "devDependencies": {

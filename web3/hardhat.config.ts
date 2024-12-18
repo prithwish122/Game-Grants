@@ -38,6 +38,10 @@ const config: HardhatUserConfig = {
       accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
       chainId: 1320,
       // gasPrice: gasPrice, // Use static gas price for now
+    },
+    mantle: {
+      url: 'https://rpc.sepolia.mantle.xyz',
+      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     }
   },
 };

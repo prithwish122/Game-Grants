@@ -6,7 +6,7 @@
  ## Description: 
  A Web3 platform empowering game enthusiasts to receive donations, fueling their passion and expanding their reach. It connects gamers with supporters, creating a community where dreams are realized through decentralized support, unlocking new opportunities in gaming. 🎮🌟
 
-Referred By HACKQUEST
+<!-- Referred By HACKQUEST -->
 
 ## TECH STACK :
 
@@ -17,10 +17,10 @@ Referred By HACKQUEST
 
 ## Getting Started
 
-### Add Contract Address GG token to wallet
-- Contract Address 0xfcF6f5ED1EaAF0C3787162a8be8d70442721A02D
+### Add Contract Address GG token to wallet (BUILD ON MANTLE TESTNET)
+- Contract Address 0x69E956FB197BC0bd86de82B00f88f68633b08d57
 
-- Verify this Contract -> [Verify GG](https://testnet.aiascan.com/token/0xfcF6f5ED1EaAF0C3787162a8be8d70442721A02D)
+- Verify this Contract -> [Verify GG](https://explorer.sepolia.mantle.xyz/token/0x69E956FB197BC0bd86de82B00f88f68633b08d57)
 
 ### Prerequisites
 
